@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IMCSTechTraining
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            /*Data access without EF*/
+
+            //Create Local Hardcoded DB
+            MyDatabase tempDB = new MyDatabase();
+
+            //Get fixed set of students from TempDB
+            List<Student> sampleStudents = tempDB.Seed();
+
+            //Read student id from user
+            int studentId = Convert.ToInt32(Console.ReadLine());
+
+            //Filter Student
+            Student userRequestedStudent = sampleStudents.Find(x => x.ID == studentId);
+
+            //Print Student
+            Console.WriteLine("DOB of student with id: {0} and Fullname: {1}  is {2}.", userRequestedStudent.ID, userRequestedStudent.FullName, userRequestedStudent.DOB);
+
+            Console.ReadLine();
+        }
+    }
+
+    public class MyDatabase
+    {
+
+        public List<Student> Seed()
+        {
+
+            List<Student> students = new List<Student>();
+
+            Student student1 = new Student();
+            student1.ID = 1;
+            student1.FirstName = "Adam";
+            student1.LastName = "Smith";
+            student1.DOB = new DateTime(1980, 05, 15);
+            students.Add(student1);
+
+            Student student2 = new Student();
+            student2.ID = 2;
+            student2.FirstName = "Larry";
+            student2.LastName = "Kumar";
+            student2.DOB = new DateTime(1982, 01, 23);
+
+            students.Add(student2);
+
+
+            Student student3 = new Student();
+            student3.ID = 3;
+            student3.FirstName = "Dennis";
+            student3.LastName = "Menace";
+            student3.DOB = new DateTime(1986,03,14);
+
+
+            return students;
+        }
+    }
+
+    public class Student
+    {
+
+        public int ID { get; set; }
+
+
+        public string LastName { get; set; }
+
+        public string FirstName { get; set; }
+
+
+        public string FullName
+        {
+            get
+            {
+                return LastName + ", " + FirstName;
+            }
+        }
+
+        public DateTime DOB { get; set; }
+
+    }
+
+
+}
+
+
+
+
